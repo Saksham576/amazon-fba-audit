@@ -15,9 +15,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Dict, List, Optional
 
+from .zoho_smtp import (
+    DEFAULT_OWNER,
+    DEFAULT_SENDER,
+    get_smtp_credentials,
+    sanitize_sender_headers,
+    send_smtp_message,
+)
 
-OWNER_EMAIL = os.getenv("FBA_OWNER_EMAIL", "virajtiwari52@gmail.com")
-SENDER_EMAIL = os.getenv("FBA_SENDER_EMAIL", "team@nexuspulsetech.com")
+OWNER_EMAIL = os.getenv("FBA_OWNER_EMAIL", DEFAULT_OWNER)
+SENDER_EMAIL = os.getenv("FBA_SENDER_EMAIL", DEFAULT_SENDER)
 
 
 class PayoutMailer:
@@ -39,10 +46,14 @@ class PayoutMailer:
         dossier_html_path: Optional[Path] = None,
         claims_csv_path: Optional[Path] = None,
     ) -> MIMEMultipart:
+        creds = get_smtp_credentials()
+        eff_sender = creds["user"] or SENDER_EMAIL
+        eff_owner = creds["owner_email"] or OWNER_EMAIL
+
         msg = MIMEMultipart("mixed")
         msg["Subject"] = f"💰 Payout Alert: ${payout_cut:,.2f} Earned from Amazon FBA Audit ({seller_id})"
-        msg["From"] = f"NexusPulse FBA Engine <{SENDER_EMAIL}>"
-        msg["To"] = OWNER_EMAIL
+        msg["From"] = f"NexusPulse FBA Engine <{eff_sender}>"
+        msg["To"] = eff_owner
 
         alt_part = MIMEMultipart("alternative")
 
@@ -149,6 +160,7 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helv
             except Exception:
                 pass
 
+        sanitize_sender_headers(msg, eff_sender)
         return msg
 
     def dispatch_payout_alert(
@@ -173,6 +185,13 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helv
             claims_csv_path=claims_csv_path,
         )
 
+        creds = get_smtp_credentials()
+        eff_user = creds["user"] or SENDER_EMAIL
+        eff_owner = creds["owner_email"] or OWNER_EMAIL
+
+        # Strictly align From header to authenticated mailbox to prevent Zoho 553 error
+        sanitize_sender_headers(msg, authenticated_user=eff_user)
+
         timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         eml_file = self.notifications_dir / f"payout_alert_{timestamp_str}.eml"
         with open(eml_file, "w", encoding="utf-8") as f:
@@ -180,31 +199,22 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helv
 
         smtp_sent = False
         smtp_error = None
+        smtp_diagnostic = None
+        host_used = None
+        port_used = None
 
-        smtp_host = os.getenv("FBA_SMTP_HOST")
-        smtp_port = int(os.getenv("FBA_SMTP_PORT", "465"))
-        smtp_user = os.getenv("FBA_SMTP_USER")
-        smtp_pass = os.getenv("FBA_SMTP_PASS")
-
-        if smtp_host and smtp_user and smtp_pass:
-            try:
-                if smtp_port == 465:
-                    with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                        server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
-                else:
-                    with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                        server.starttls()
-                        server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
-                smtp_sent = True
-            except Exception as e:
-                smtp_error = str(e)
+        if creds["has_credentials"]:
+            send_res = send_smtp_message(msg, timeout=10.0, auto_fallback=True)
+            smtp_sent = send_res["success"]
+            smtp_error = send_res["error"]
+            smtp_diagnostic = send_res.get("guidance")
+            host_used = send_res.get("host_used")
+            port_used = send_res.get("port_used")
 
         meta = {
             "timestamp": datetime.now().isoformat(),
-            "recipient": OWNER_EMAIL,
-            "sender": SENDER_EMAIL,
+            "recipient": eff_owner,
+            "sender": eff_user,
             "seller_id": seller_id,
             "total_claims": total_claims_count,
             "eligible_amount": float(eligible_amount),
@@ -212,6 +222,9 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helv
             "eml_path": str(eml_file),
             "smtp_sent": smtp_sent,
             "smtp_error": smtp_error,
+            "smtp_diagnostic": smtp_diagnostic,
+            "host_used": host_used,
+            "port_used": port_used,
         }
 
         meta_file = self.notifications_dir / f"payout_alert_{timestamp_str}.json"

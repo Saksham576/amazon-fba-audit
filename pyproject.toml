@@ -48,6 +48,7 @@ fba-audit = "fba_audit.cli:main"
 fba-daemon = "fba_audit.daemon:main"
 fba-portal = "fba_audit.acquisition.portal:main"
 fba-business = "fba_audit.acquisition.autonomous_runner:main"
+fba-test-mail = "fba_audit.mailer_diag:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

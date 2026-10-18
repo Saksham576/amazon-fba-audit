@@ -15,6 +15,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from .leads import BrandFinder, BrandLead, LeadStatus
 from .outreach import OutreachGenerator, EmailMessage, OutreachSequence
 from ..mailer import OWNER_EMAIL, SENDER_EMAIL
+from ..zoho_smtp import get_smtp_credentials, sanitize_sender_headers, send_smtp_message
 
 
 DEFAULT_CRM_DIR = Path("payouts/crm")
@@ -125,10 +126,10 @@ class AutonomousCRM:
         finder = BrandFinder()
         dispatched_records = []
 
-        smtp_host = os.getenv("FBA_SMTP_HOST")
-        smtp_port = int(os.getenv("FBA_SMTP_PORT", "465"))
-        smtp_user = os.getenv("FBA_SMTP_USER")
-        smtp_pass = os.getenv("FBA_SMTP_PASS")
+        creds = get_smtp_credentials()
+        eff_user = creds["user"] or SENDER_EMAIL
+        batch_smtp_broken_reason: Optional[str] = None
+        batch_smtp_broken_diagnostic: Optional[str] = None
 
         for lead_info in due_leads:
             brand_id = lead_info["brand_id"]
@@ -150,11 +151,14 @@ class AutonomousCRM:
             from email.mime.text import MIMEText
             msg = MIMEMultipart("alternative")
             msg["Subject"] = email_msg.subject
-            msg["From"] = f"{email_msg.sender_name} <{SENDER_EMAIL}>"
+            msg["From"] = f"{email_msg.sender_name} <{eff_user}>"
             msg["To"] = email_msg.recipient_email
             msg["Reply-To"] = email_msg.sender_email
             msg.attach(MIMEText(email_msg.text_content, "plain", "utf-8"))
             msg.attach(MIMEText(email_msg.html_content, "html", "utf-8"))
+
+            # Strictly sanitize headers so From matches authenticated mailbox to prevent Zoho 553 error
+            sanitize_sender_headers(msg, authenticated_user=eff_user, default_display_name=email_msg.sender_name)
 
             timestamp_str = now.strftime("%Y%m%d_%H%M%S")
             eml_filename = f"outreach_{brand_id}_step_{next_step}_{timestamp_str}.eml"
@@ -164,20 +168,28 @@ class AutonomousCRM:
 
             live_sent = False
             smtp_err = None
-            if smtp_host and smtp_user and smtp_pass:
-                try:
-                    if smtp_port == 465:
-                        with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                            server.login(smtp_user, smtp_pass)
-                            server.send_message(msg)
-                    else:
-                        with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                            server.starttls()
-                            server.login(smtp_user, smtp_pass)
-                            server.send_message(msg)
-                    live_sent = True
-                except Exception as e:
-                    smtp_err = str(e)
+            smtp_diag = None
+            host_used = None
+            port_used = None
+
+            if creds["has_credentials"]:
+                if batch_smtp_broken_reason:
+                    smtp_err = f"Skipped live delivery: prior connection in batch failed ({batch_smtp_broken_reason})"
+                    smtp_diag = batch_smtp_broken_diagnostic
+                else:
+                    send_res = send_smtp_message(msg, timeout=10.0, auto_fallback=True)
+                    live_sent = send_res["success"]
+                    smtp_err = send_res["error"]
+                    smtp_diag = send_res.get("guidance")
+                    host_used = send_res.get("host_used")
+                    port_used = send_res.get("port_used")
+
+                    if not live_sent and smtp_err:
+                        # Short circuit on network timeout / firewall block or auth failure to avoid cascading hangs
+                        err_str = str(smtp_err).lower()
+                        if "timed out" in err_str or "timeout" in err_str or "535" in err_str or "authentication failed" in err_str:
+                            batch_smtp_broken_reason = smtp_err
+                            batch_smtp_broken_diagnostic = smtp_diag
 
             # Update lead state
             delay_days = 3 if next_step < 3 else 0
@@ -191,6 +203,9 @@ class AutonomousCRM:
                 "eml_file": str(eml_path),
                 "live_smtp_sent": live_sent,
                 "smtp_error": smtp_err,
+                "smtp_diagnostic": smtp_diag,
+                "host_used": host_used,
+                "port_used": port_used,
             }
 
             target_lead = state["leads"].get(brand_id, lead_info)

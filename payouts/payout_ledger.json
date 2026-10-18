@@ -97,6 +97,19 @@
       "new_eligible_amount": 0.0,
       "payout_earned_usd": 0.0,
       "notification": null
+    },
+    {
+      "run_id": "run_20261018_214524",
+      "timestamp": "2026-10-18T21:45:24.593562",
+      "seller_id": "TEST_CYCLE_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
     }
   ]
 }
