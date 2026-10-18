@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "last_run": "2026-10-18T09:45:37.716316+00:00",
+  "last_run": "2026-10-18T09:46:12.631474+00:00",
   "total_leads": 9,
   "active_pipeline_count": 9,
-  "total_dispatched_touches": 10,
+  "total_dispatched_touches": 12,
   "leads": {
     "LEAD-HK-001": {
       "brand_id": "LEAD-HK-001",
@@ -182,10 +182,20 @@
       "estimated_monthly_volume_usd": 290000.0,
       "estimated_annual_discrepancy_usd": 73080.0,
       "potential_15_fee_usd": 10962.0,
-      "current_step": 0,
-      "status": "NEW",
-      "history": [],
-      "next_touch_due": "2026-10-18T09:43:37.857102+00:00"
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:46:12.631474+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for BarkHaven Goods (Policy G200379860)",
+          "recipient": "rachel@barkhavengoods.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-001_step_1_20261018_094612.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:46:12.631474+00:00"
     },
     "LEAD-PET-002": {
       "brand_id": "LEAD-PET-002",
@@ -196,10 +206,20 @@
       "estimated_monthly_volume_usd": 145000.0,
       "estimated_annual_discrepancy_usd": 40020.0,
       "potential_15_fee_usd": 6003.0,
-      "current_step": 0,
-      "status": "NEW",
-      "history": [],
-      "next_touch_due": "2026-10-18T09:43:37.857102+00:00"
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:46:12.631474+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for Pawsome Vitality (Policy G200379860)",
+          "recipient": "bradley@pawsomevitality.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-002_step_1_20261018_094612.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:46:12.631474+00:00"
     }
   }
 }
