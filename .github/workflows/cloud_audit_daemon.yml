@@ -18,29 +18,31 @@ on:
         default: 'SELLER_CLOUD_SCHEDULED'
 
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 jobs:
   cloud_audit_cycle:
-    name: Execute Autonomous Audit & Payout Alert
+    name: Execute Autonomous Business & Outreach Cycle
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install FBA Audit Engine
+      - name: Install FBA Audit & Acquisition Suite
         run: |
           python -m pip install --upgrade pip
           pip install .
 
-      - name: Run Autonomous Audit Daemon
+      - name: Run Autonomous Business Cycle (Outreach + Audit + Payouts)
         env:
           FBA_OWNER_EMAIL: virajtiwari52@gmail.com
           FBA_SENDER_EMAIL: ${{ secrets.FBA_SENDER_EMAIL || 'team@nexuspulsetech.com' }}
@@ -52,13 +54,13 @@ jobs:
           INPUT_SIMULATE: ${{ inputs.simulate_if_empty }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
-          mkdir -p inbound_reports audit_output payouts/notifications
+          mkdir -p inbound_reports audit_output payouts/notifications payouts/crm/outbox
           SELLER_ARG="${INPUT_SELLER_ID:-SELLER_CLOUD_SCHEDULED}"
-          SIM_FLAG=""
-          if [ "$EVENT_NAME" = "schedule" ] || [ "$INPUT_SIMULATE" = "true" ] || [ -z "$EVENT_NAME" ]; then
-            SIM_FLAG="--simulate-if-empty"
+          SIM_FLAG="--simulate-audit"
+          if [ "$INPUT_SIMULATE" = "false" ]; then
+            SIM_FLAG=""
           fi
-          fba-daemon --once $SIM_FLAG --seller "$SELLER_ARG"
+          fba-business --batch-size 5 $SIM_FLAG --seller "$SELLER_ARG"
 
       - name: Upload Audit Deliverables (CSV, HTML Dossier, JSON)
         uses: actions/upload-artifact@v4
@@ -68,16 +70,24 @@ jobs:
           path: audit_output/
           if-no-files-found: warn
 
-      - name: Upload Payout Ledger & Notifications
+      - name: Upload Payout Ledger & CRM State
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: payout-deliverables-${{ github.run_id }}
+          name: business-state-${{ github.run_id }}
           path: payouts/
           if-no-files-found: warn
 
-      - name: Dispatch Payout Alert & Output Step Summary
+      - name: Persist CRM State & Payout Ledger
         if: always()
         run: |
-          python -m fba_audit.reports.github_summary
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add payouts/crm/crm_state.json payouts/payout_ledger.json payouts/last_cycle_summary.md || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(autonomous): update CRM pipeline state and payout ledger [skip ci]"
+            git push origin main || echo "Push skipped or rejected."
+          else
+            echo "No state changes to commit."
+          fi
 

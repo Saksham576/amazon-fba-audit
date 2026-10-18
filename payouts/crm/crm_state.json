@@ -1,0 +1,205 @@
+{
+  "version": "1.0",
+  "last_run": "2026-10-18T09:45:37.716316+00:00",
+  "total_leads": 9,
+  "active_pipeline_count": 9,
+  "total_dispatched_touches": 10,
+  "leads": {
+    "LEAD-HK-001": {
+      "brand_id": "LEAD-HK-001",
+      "brand_name": "AuraKitchen Labs",
+      "category": "Home & Kitchen",
+      "decision_maker_name": "Marcus Vance",
+      "decision_maker_email": "marcus@aurakitchenlabs.com",
+      "estimated_monthly_volume_usd": 185000.0,
+      "estimated_annual_discrepancy_usd": 48840.0,
+      "potential_15_fee_usd": 7326.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:44:48.272861+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for AuraKitchen Labs (Policy G200379860)",
+          "recipient": "marcus@aurakitchenlabs.com",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-HK-001_step_1_20261018_094448.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+    },
+    "LEAD-HK-002": {
+      "brand_id": "LEAD-HK-002",
+      "brand_name": "PureLoom Living",
+      "category": "Home & Kitchen",
+      "decision_maker_name": "Sarah Lin",
+      "decision_maker_email": "sarah.lin@pureloomliving.com",
+      "estimated_monthly_volume_usd": 120000.0,
+      "estimated_annual_discrepancy_usd": 30240.0,
+      "potential_15_fee_usd": 4536.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:44:48.272861+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for PureLoom Living (Policy G200379860)",
+          "recipient": "sarah.lin@pureloomliving.com",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-HK-002_step_1_20261018_094448.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+    },
+    "LEAD-EL-001": {
+      "brand_id": "LEAD-EL-001",
+      "brand_name": "SoundPulse Audio",
+      "category": "Electronics",
+      "decision_maker_name": "David Sterling",
+      "decision_maker_email": "david.sterling@soundpulse.tech",
+      "estimated_monthly_volume_usd": 340000.0,
+      "estimated_annual_discrepancy_usd": 102000.0,
+      "potential_15_fee_usd": 15300.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:44:48.272861+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for SoundPulse Audio (Policy G200379860)",
+          "recipient": "david.sterling@soundpulse.tech",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-EL-001_step_1_20261018_094448.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+    },
+    "LEAD-EL-002": {
+      "brand_id": "LEAD-EL-002",
+      "brand_name": "VoltCharge Pro",
+      "category": "Electronics",
+      "decision_maker_name": "Elena Rostova",
+      "decision_maker_email": "elena@voltchargepro.io",
+      "estimated_monthly_volume_usd": 210000.0,
+      "estimated_annual_discrepancy_usd": 60480.0,
+      "potential_15_fee_usd": 9072.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:45:11.797568+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for VoltCharge Pro (Policy G200379860)",
+          "recipient": "elena@voltchargepro.io",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-EL-002_step_1_20261018_094511.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:45:11.797568+00:00"
+    },
+    "LEAD-AP-001": {
+      "brand_id": "LEAD-AP-001",
+      "brand_name": "NordicActive Wear",
+      "category": "Apparel",
+      "decision_maker_name": "Henrik Lindqvist",
+      "decision_maker_email": "henrik@nordicactivewear.com",
+      "estimated_monthly_volume_usd": 260000.0,
+      "estimated_annual_discrepancy_usd": 96720.0,
+      "potential_15_fee_usd": 14508.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:45:11.797568+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for NordicActive Wear (Policy G200379860)",
+          "recipient": "henrik@nordicactivewear.com",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-AP-001_step_1_20261018_094511.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:45:11.797568+00:00"
+    },
+    "LEAD-AP-002": {
+      "brand_id": "LEAD-AP-002",
+      "brand_name": "ZenAthletica",
+      "category": "Apparel",
+      "decision_maker_name": "Jessica Taylor",
+      "decision_maker_email": "jtaylor@zenathletica.com",
+      "estimated_monthly_volume_usd": 195000.0,
+      "estimated_annual_discrepancy_usd": 67860.0,
+      "potential_15_fee_usd": 10179.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:45:37.716316+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for ZenAthletica (Policy G200379860)",
+          "recipient": "jtaylor@zenathletica.com",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-AP-002_step_1_20261018_094537.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:45:37.716316+00:00"
+    },
+    "LEAD-TY-001": {
+      "brand_id": "LEAD-TY-001",
+      "brand_name": "TinySparks Playworks",
+      "category": "Toys",
+      "decision_maker_name": "Arthur Pendelton",
+      "decision_maker_email": "arthur@tinysparksplay.com",
+      "estimated_monthly_volume_usd": 160000.0,
+      "estimated_annual_discrepancy_usd": 38400.0,
+      "potential_15_fee_usd": 5760.0,
+      "current_step": 1,
+      "status": "STEP_1_CONTACTED",
+      "history": [
+        {
+          "step": 1,
+          "dispatched_at": "2026-10-18T09:45:37.716316+00:00",
+          "subject": "Unclaimed FBA inventory discrepancy for TinySparks Playworks (Policy G200379860)",
+          "recipient": "arthur@tinysparksplay.com",
+          "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-TY-001_step_1_20261018_094537.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null
+        }
+      ],
+      "next_touch_due": "2026-10-21T09:45:37.716316+00:00"
+    },
+    "LEAD-PET-001": {
+      "brand_id": "LEAD-PET-001",
+      "brand_name": "BarkHaven Goods",
+      "category": "Pet Supplies",
+      "decision_maker_name": "Rachel Thorne",
+      "decision_maker_email": "rachel@barkhavengoods.com",
+      "estimated_monthly_volume_usd": 290000.0,
+      "estimated_annual_discrepancy_usd": 73080.0,
+      "potential_15_fee_usd": 10962.0,
+      "current_step": 0,
+      "status": "NEW",
+      "history": [],
+      "next_touch_due": "2026-10-18T09:43:37.857102+00:00"
+    },
+    "LEAD-PET-002": {
+      "brand_id": "LEAD-PET-002",
+      "brand_name": "Pawsome Vitality",
+      "category": "Pet Supplies",
+      "decision_maker_name": "Dr. Bradley Cooper",
+      "decision_maker_email": "bradley@pawsomevitality.com",
+      "estimated_monthly_volume_usd": 145000.0,
+      "estimated_annual_discrepancy_usd": 40020.0,
+      "potential_15_fee_usd": 6003.0,
+      "current_step": 0,
+      "status": "NEW",
+      "history": [],
+      "next_touch_due": "2026-10-18T09:43:37.857102+00:00"
+    }
+  }
+}

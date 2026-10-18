@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-10-18T15:13:37.868052",
+  "recipient": "virajtiwari52@gmail.com",
+  "sender": "team@nexuspulsetech.com",
+  "seller_id": "PRIMARY_AUTONOMOUS_PIPELINE_SIMULATION",
+  "total_claims": 1,
+  "eligible_amount": 19.99,
+  "payout_cut": 3.0,
+  "eml_path": "payouts\\notifications\\payout_alert_20261018_151337.eml",
+  "smtp_sent": false,
+  "smtp_error": null
+}
