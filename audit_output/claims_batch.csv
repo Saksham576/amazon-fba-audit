@@ -1,0 +1,2 @@
+claim_id,fnsku,msku,asin,order_id,transaction_id,event_date,discrepancy_type,quantity,unit_price,claim_amount,currency,policy_citation,policy_clause,claim_window_days,days_remaining,claim_status,evidence_notes,fulfillment_center
+67806d2e0743877f,X008MUG303,SKU-COFFEE-MUG-CERAMIC,B07MUG1234,,TX-WH-67806d2e,2026-09-09,WAREHOUSE_LOST_DAMAGED,1,19.99,19.99,USD,G200379860,FBA inventory reimbursement policy: Fulfillment center operations claims,60,40,ELIGIBLE,Uncompensated balance: 0 lost + 0 damaged - 0 found - -1 reimbursed - 0 disposed = 1 units,ONT8

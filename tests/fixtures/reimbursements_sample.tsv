@@ -1,0 +1,5 @@
+approval-date	reimbursement-id	case-id	amazon-order-id	reason	sku	fnsku	asin	product-name	condition	currency-unit	amount-per-unit	amount-total	quantity-reimbursed-cash	quantity-reimbursed-inventory	quantity-reimbursed-total
+2026-08-25T11:45:00+00:00	1092837461	14892019283	112-5432109-8765432	Customer Return	SKU-WIRELESS-EARBUDS	X002ABC101	B09ABCDEFG	Wireless Noise Cancelling Earbuds	New	USD	29.99	29.99	1	0	1
+2026-08-26T14:10:00+00:00	1092837462		112-5432109-8765432	Damaged: Warehouse	SKU-GAMING-KEYBOARD-RGB	X009KEY404	B06KEY5678	Mechanical RGB Gaming Keyboard	New	USD	55.00	55.00	1	0	1
+2026-08-28T16:20:30+00:00	1092837463			Lost: Warehouse	SKU-WIRELESS-EARBUDS	X002ABC101	B09ABCDEFG	Wireless Noise Cancelling Earbuds	New	USD	0.00	0.00	0	1	1
+2026-08-29T10:05:00+00:00	1092837464			Lost: Warehouse	SKU-COFFEE-MUG-CERAMIC	X008MUG303	B07MUG1234	Insulated Ceramic Travel Mug	New	USD	12.50	-12.50	-1	0	-1

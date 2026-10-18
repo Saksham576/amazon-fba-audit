@@ -1,0 +1,55 @@
+{
+  "reconciled_at": "2026-10-18T14:25:51.612533",
+  "as_of_date": "2026-09-29",
+  "claims": [
+    {
+      "claim_id": "67806d2e0743877f",
+      "fnsku": "X008MUG303",
+      "msku": "SKU-COFFEE-MUG-CERAMIC",
+      "asin": "B07MUG1234",
+      "transaction_id": "TX-WH-67806d2e",
+      "order_id": "",
+      "event_date": "2026-09-09",
+      "discrepancy_type": "WAREHOUSE_LOST_DAMAGED",
+      "discrepancy_quantity": 1,
+      "unit_reimbursement_estimate": "19.99",
+      "total_reimbursement_estimate": "19.99",
+      "currency": "USD",
+      "policy_citation": "G200379860",
+      "policy_clause": "FBA inventory reimbursement policy: Fulfillment center operations claims",
+      "claim_window_days": 60,
+      "claim_expiration_date": "2026-11-08",
+      "days_until_expiration": 40,
+      "claim_status": "ELIGIBLE",
+      "evidence_notes": "Uncompensated balance: 0 lost + 0 damaged - 0 found - -1 reimbursed - 0 disposed = 1 units",
+      "fulfillment_center": "ONT8"
+    }
+  ],
+  "summary": {
+    "audit_id": null,
+    "as_of_date": "2026-09-29",
+    "generated_at": null,
+    "total_claims_count": 1,
+    "total_claims": 1,
+    "total_eligible_count": 1,
+    "total_expired_count": 0,
+    "total_discrepancy_units": 1,
+    "total_claim_amount": "19.99",
+    "total_verified_amount": "19.99",
+    "total_discrepancy_amount": "19.99",
+    "currency": "USD",
+    "eligible_claim_amount": "19.99",
+    "eligible_now_amount": "19.99",
+    "expired_claim_amount": "0.00",
+    "expired_amount": "0.00",
+    "pending_return_amount": "0.00",
+    "amount_by_discrepancy_type": {
+      "WAREHOUSE_LOST_DAMAGED": "19.99"
+    },
+    "units_by_discrepancy_type": {
+      "WAREHOUSE_LOST_DAMAGED": 1
+    },
+    "category_breakdowns": [],
+    "top_affected_skus": []
+  }
+}

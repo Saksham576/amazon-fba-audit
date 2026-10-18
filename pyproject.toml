@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fba-audit"
+version = "0.1.0"
+description = "Deterministic Amazon FBA inventory discrepancy reconciliation and reimbursement audit engine"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "FBA Audit Engine Team" }
+]
+keywords = [
+    "amazon",
+    "sp-api",
+    "fba",
+    "audit",
+    "reimbursement",
+    "reconciliation",
+    "seller-central",
+    "inventory"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial :: Accounting",
+]
+
+dependencies = [
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+fba-audit = "fba_audit.cli:main"
+fba-daemon = "fba_audit.daemon:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = [
+    "tier1: Tier 1 Feature Unit Tests",
+    "tier2: Tier 2 Boundary and Corner Tests",
+    "tier3: Tier 3 Cross-Feature Combination Tests",
+    "tier4: Tier 4 E2E Synthetic Workload Simulation Tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src/fba_audit"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 90

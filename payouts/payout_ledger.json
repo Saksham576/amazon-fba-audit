@@ -1,0 +1,128 @@
+{
+  "business_name": "Autonomous Amazon FBA Audit & Reimbursement Engine",
+  "owner_email": "virajtiwari52@gmail.com",
+  "contingency_rate": 0.15,
+  "total_recoverable_usd": 19.99,
+  "total_earned_usd": 3.0,
+  "total_collected_usd": 0.0,
+  "processed_claim_hashes": [
+    "67806d2e0743877f"
+  ],
+  "audit_runs": [
+    {
+      "run_id": "run_20261018_135357",
+      "timestamp": "2026-10-18T13:53:57.680923",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 1,
+      "new_eligible_amount": 19.99,
+      "payout_earned_usd": 3.0,
+      "notification": {
+        "timestamp": "2026-10-18T13:53:57.683512",
+        "recipient": "virajtiwari52@gmail.com",
+        "sender": "team@nexuspulsetech.com",
+        "seller_id": "SELLER_PRIMARY_SIMULATION",
+        "total_claims": 1,
+        "eligible_amount": 19.99,
+        "payout_cut": 3.0,
+        "eml_path": "payouts\\notifications\\payout_alert_20261018_135357.eml",
+        "smtp_sent": false,
+        "smtp_error": null
+      }
+    },
+    {
+      "run_id": "run_20261018_135404",
+      "timestamp": "2026-10-18T13:54:04.376581",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_140706",
+      "timestamp": "2026-10-18T14:07:06.673732",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_141657",
+      "timestamp": "2026-10-18T14:16:57.269763",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_142333",
+      "timestamp": "2026-10-18T14:23:33.218897",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_142534",
+      "timestamp": "2026-10-18T14:25:34.400858",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_142543",
+      "timestamp": "2026-10-18T14:25:43.084518",
+      "seller_id": "SELLER_PRIMARY_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    },
+    {
+      "run_id": "run_20261018_142551",
+      "timestamp": "2026-10-18T14:25:51.619899",
+      "seller_id": "SELLER_CLOUD_SCHEDULED_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
+    }
+  ]
+}

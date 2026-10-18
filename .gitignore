@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Build / packaging
+dist/
+build/
+*.egg-info/
+
+# Agent caches
+.agents/
+.gemini/
+
+# Runtime daemon logs (keep ledger & notifications tracked or sample)
+payouts/*.log
+
+# Operating system artifacts
+.DS_Store
+Thumbs.db

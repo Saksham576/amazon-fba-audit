@@ -1,0 +1,5 @@
+return-date	order-id	sku	asin	fnsku	product-name	quantity	fulfillment-center-id	detailed-disposition	reason	status	license-plate-number	customer-comments
+2026-08-20T14:10:05+00:00	114-8761234-9876543	SKU-YOGA-MAT-PRO	B08XYZ7890	X005XYZ202	Eco Pro Fitness Yoga Mat	1	PHX3	SELLABLE	UNWANTED_ITEM	Unit returned to inventory	LPNRR102938475	Changed my mind
+2026-08-22T09:33:21+00:00	112-5432109-8765432	SKU-WIRELESS-EARBUDS	B09ABCDEFG	X002ABC101	Wireless Noise Cancelling Earbuds	1	IND1	CARRIER_DAMAGED	DAMAGED_DURING_TRANSIT	Reimbursed	LPNRR847362910	Box was crushed upon arrival
+2026-08-25T17:45:11+00:00	113-1122334-4455667	SKU-GAMING-KEYBOARD-RGB	B06KEY5678	X009KEY404	Mechanical RGB Gaming Keyboard	1	DFW6	CUSTOMER_DAMAGED	DEFECTIVE	Unit returned to inventory	LPNRR564738291	Dropped coffee on keys
+2026-08-28T11:20:00+00:00	111-2233445-5566778	SKU-COFFEE-MUG-CERAMIC	B07MUG1234	X008MUG303	Insulated Ceramic Travel Mug	1	PHX3	DEFECTIVE	NOT_AS_DESCRIBED	Unit returned to inventory	LPNRR998877665	Handle was loose
