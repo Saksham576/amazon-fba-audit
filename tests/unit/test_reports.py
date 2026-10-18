@@ -94,3 +94,45 @@ def test_generate_html_dossier(tmp_path: Path, sample_audit_result: AuditResult)
     assert "<!DOCTYPE html>" in content
     assert "X001ABC" in content
     assert "CLAIM12345" in content
+
+
+def test_generate_github_step_summary(tmp_path: Path):
+    import json
+    from fba_audit.reports.github_summary import generate_github_step_summary, main
+
+    payouts_dir = tmp_path / "payouts"
+    notifications_dir = payouts_dir / "notifications"
+    notifications_dir.mkdir(parents=True, exist_ok=True)
+
+    ledger_data = {
+        "total_recoverable_usd": 1500.0,
+        "total_earned_usd": 225.0,
+        "audit_runs": [{"run_id": "run_01"}],
+        "processed_claim_hashes": ["hash1", "hash2"],
+    }
+    with open(payouts_dir / "payout_ledger.json", "w", encoding="utf-8") as f:
+        json.dump(ledger_data, f)
+
+    notif_data = {
+        "recipient": "virajtiwari52@gmail.com",
+        "total_claims": 5,
+        "payout_cut": 225.0,
+        "smtp_sent": True,
+        "eml_path": "sample.eml",
+    }
+    with open(notifications_dir / "payout_alert_01.json", "w", encoding="utf-8") as f:
+        json.dump(notif_data, f)
+
+    summary_file = tmp_path / "summary.md"
+    summary_text = generate_github_step_summary(payouts_dir=payouts_dir, summary_path=str(summary_file))
+
+    assert "virajtiwari52@gmail.com" in summary_text
+    assert "$1,500.00" in summary_text
+    assert "$225.00" in summary_text
+    assert "Transmitted via Live SMTP" in summary_text
+    assert summary_file.exists()
+    assert summary_file.read_text(encoding="utf-8") == summary_text
+
+    # Also test empty/fallback summary
+    empty_summary = generate_github_step_summary(payouts_dir=tmp_path / "empty")
+    assert "No new unnotified claims" in empty_summary
