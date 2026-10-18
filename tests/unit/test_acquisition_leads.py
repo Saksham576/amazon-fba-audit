@@ -144,3 +144,49 @@ def test_leads_csv_and_json_export_import(tmp_path: Path):
     assert len(reimported) == len(leads)
     assert reimported[0].brand_id == leads[0].brand_id
     assert reimported[0].decision_maker.email == leads[0].decision_maker.email
+
+    # Test CSV import
+    csv_reimported_finder = BrandFinder.import_csv(csv_path)
+    csv_reimported = csv_reimported_finder.list_all()
+    assert len(csv_reimported) == len(leads)
+    assert csv_reimported[0].brand_id == leads[0].brand_id
+    assert csv_reimported[0].brand_name == leads[0].brand_name
+    assert csv_reimported[0].category == TargetCategory.PET_SUPPLIES
+    assert csv_reimported[0].decision_maker.email == leads[0].decision_maker.email
+
+
+def test_lead_zero_discrepancy_rate():
+    lead = BrandLead(
+        brand_id="LEAD-ZERO",
+        brand_name="Pristine Goods",
+        category=TargetCategory.HOME_AND_KITCHEN,
+        business_entity_name="Pristine Goods LLC",
+        storefront=StorefrontMetadata(storefront_url="https://amazon.com/stores/pristine"),
+        decision_maker=DecisionMaker(name="Pat Clean", email="pat@pristine.com"),
+        estimated_monthly_volume_usd=Decimal("50000.00"),
+        estimated_monthly_units=1000,
+        typical_discrepancy_rate=Decimal("0.00"),
+    )
+    assert lead.estimated_annual_discrepancy_usd == Decimal("0.00")
+    assert lead.estimated_contingency_fee_usd == Decimal("0.00")
+
+
+def test_brand_finder_add_and_get():
+    finder = BrandFinder(leads=[])
+    assert len(finder.list_all()) == 0
+
+    lead = BrandLead(
+        brand_id="LEAD-CUSTOM",
+        brand_name="Custom Brand",
+        category=TargetCategory.ELECTRONICS,
+        business_entity_name="Custom Brand LLC",
+        storefront=StorefrontMetadata(storefront_url="https://amazon.com/stores/custom"),
+        decision_maker=DecisionMaker(name="Jane Doe", email="jane@custom.com"),
+        estimated_monthly_volume_usd=Decimal("80000.00"),
+        estimated_monthly_units=2000,
+    )
+    finder.add_lead(lead)
+    assert len(finder.list_all()) == 1
+    assert finder.get_lead("LEAD-CUSTOM") is not None
+    assert finder.get_lead("LEAD-CUSTOM").brand_name == "Custom Brand"
+    assert finder.get_lead("NONEXISTENT") is None

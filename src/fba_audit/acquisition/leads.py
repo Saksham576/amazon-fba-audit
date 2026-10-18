@@ -87,7 +87,7 @@ class BrandLead(BaseModel):
 
     @property
     def estimated_annual_discrepancy_usd(self) -> Decimal:
-        rate = self.typical_discrepancy_rate or CATEGORY_DISCREPANCY_BENCHMARKS.get(self.category, Decimal("0.02"))
+        rate = self.typical_discrepancy_rate if self.typical_discrepancy_rate is not None else CATEGORY_DISCREPANCY_BENCHMARKS.get(self.category, Decimal("0.02"))
         return (self.estimated_annual_volume_usd * rate).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     @property
@@ -357,7 +357,7 @@ class BrandFinder:
 
     def __init__(self, leads: Optional[List[BrandLead]] = None):
         self._leads: Dict[str, BrandLead] = {}
-        if leads:
+        if leads is not None:
             for lead in leads:
                 self._leads[lead.brand_id] = lead
         else:
@@ -440,13 +440,22 @@ class BrandFinder:
         brand_prefixes = ["Apex", "Vital", "Summit", "Lumina", "Terra", "Nova", "Starlight", "Core", "Aura", "Prime"]
         brand_suffixes = ["Craft", "Works", "Lab", "Gear", "Living", "Tech", "Dynamics", "Supply", "Elements", "Pro"]
 
+        cat_descriptors = {
+            TargetCategory.HOME_AND_KITCHEN: "Kitchen",
+            TargetCategory.ELECTRONICS: "Tech",
+            TargetCategory.APPAREL: "Apparel",
+            TargetCategory.TOYS: "Toys",
+            TargetCategory.PET_SUPPLIES: "Pets",
+        }
+
         synthetic_leads: List[BrandLead] = []
         for i in range(count):
             cat = random.choice(target_cats)
-            brand_name = f"{random.choice(brand_prefixes)}{random.choice(brand_suffixes)} {cat.name.capitalize()}"
+            cat_desc = cat_descriptors.get(cat, cat.name.capitalize())
+            brand_name = f"{random.choice(brand_prefixes)}{random.choice(brand_suffixes)} {cat_desc}"
             fn = random.choice(first_names)
             ln = random.choice(last_names)
-            domain = brand_name.lower().replace(" ", "").replace("&", "") + ".com"
+            domain = brand_name.lower().replace(" ", "").replace("&", "").replace("-", "") + ".com"
             monthly_vol = Decimal(random.randint(60, 450) * 1000)
             avg_price = Decimal(random.randint(18, 95))
             units = int(monthly_vol / avg_price)
@@ -537,4 +546,42 @@ class BrandFinder:
         with open(p, "r", encoding="utf-8") as f:
             data = json.load(f)
         leads = [BrandLead(**item) for item in data]
+        return cls(leads=leads)
+
+    @classmethod
+    def import_csv(cls, input_path: Union[str, Path]) -> "BrandFinder":
+        p = Path(input_path)
+        leads: List[BrandLead] = []
+        with open(p, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                cat_val = row["category"]
+                cat = None
+                for c in TargetCategory:
+                    if c.value.lower() == cat_val.lower() or c.name.lower() == cat_val.lower():
+                        cat = c
+                        break
+                if not cat:
+                    cat = TargetCategory.HOME_AND_KITCHEN
+
+                lead = BrandLead(
+                    brand_id=row["brand_id"],
+                    brand_name=row["brand_name"],
+                    category=cat,
+                    business_entity_name=row["business_entity_name"],
+                    storefront=StorefrontMetadata(
+                        storefront_url=row.get("storefront_url") or f"https://www.amazon.com/stores/{row['brand_name'].replace(' ', '')}",
+                    ),
+                    decision_maker=DecisionMaker(
+                        name=row["decision_maker_name"],
+                        title=row.get("decision_maker_title") or "Founder",
+                        email=row["contact_email"],
+                        phone=row.get("phone") or None,
+                    ),
+                    estimated_monthly_volume_usd=Decimal(row["estimated_monthly_volume_usd"]),
+                    estimated_monthly_units=max(1, int(Decimal(row.get("estimated_monthly_volume_usd", "100000")) / Decimal("30"))),
+                    status=LeadStatus(row.get("status", "NEW")),
+                    notes=row.get("notes") or None,
+                )
+                leads.append(lead)
         return cls(leads=leads)

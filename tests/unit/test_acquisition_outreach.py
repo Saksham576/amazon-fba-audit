@@ -132,3 +132,57 @@ def test_outreach_export_to_directory(tmp_path: Path, sample_lead):
     sample_eml_text = emls[0].read_text(encoding="utf-8")
     assert "virajtiwari52@gmail.com" in sample_eml_text
     assert "robert@apexkitchenware.com" in sample_eml_text
+
+
+def test_outreach_safe_first_name_handling():
+    gen = OutreachGenerator()
+
+    # Lead with empty / whitespace name
+    lead_blank = BrandLead(
+        brand_id="LEAD-BLANK",
+        brand_name="Blank Name Co",
+        category=TargetCategory.TOYS,
+        business_entity_name="Blank LLC",
+        storefront=StorefrontMetadata(storefront_url="https://amazon.com/stores/blank"),
+        decision_maker=DecisionMaker(name="   ", email="info@blank.com"),
+        estimated_monthly_volume_usd=Decimal("50000.00"),
+        estimated_monthly_units=1000,
+    )
+    seq = gen.generate_sequence(lead_blank)
+    assert "Hi there," in seq.emails[0].text_content
+
+    # Lead with single name
+    lead_single = BrandLead(
+        brand_id="LEAD-SINGLE",
+        brand_name="Cher Brand",
+        category=TargetCategory.APPAREL,
+        business_entity_name="Cher LLC",
+        storefront=StorefrontMetadata(storefront_url="https://amazon.com/stores/cher"),
+        decision_maker=DecisionMaker(name="Cher", email="cher@cherbrand.com"),
+        estimated_monthly_volume_usd=Decimal("50000.00"),
+        estimated_monthly_units=1000,
+    )
+    seq_single = gen.generate_sequence(lead_single)
+    assert "Hi Cher," in seq_single.emails[0].text_content
+
+
+def test_outreach_export_special_chars_brand(tmp_path: Path):
+    gen = OutreachGenerator()
+    lead_special = BrandLead(
+        brand_id="LEAD-SPEC",
+        brand_name='Acme / Global: "Toys" & More',
+        category=TargetCategory.TOYS,
+        business_entity_name="Acme Special LLC",
+        storefront=StorefrontMetadata(storefront_url="https://amazon.com/stores/acme"),
+        decision_maker=DecisionMaker(name="Alex Smith", email="alex@acme.com"),
+        estimated_monthly_volume_usd=Decimal("60000.00"),
+        estimated_monthly_units=1500,
+    )
+    seq = gen.generate_sequence(lead_special)
+    exported = gen.export_sequence_to_dir(seq, tmp_path)
+    assert len(exported) == 6
+    for f in exported:
+        assert f.exists()
+        assert ":" not in f.parent.name
+        assert "/" not in f.parent.name
+        assert '"' not in f.parent.name

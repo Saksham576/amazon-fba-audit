@@ -86,20 +86,35 @@ def test_daemon_simulation_and_idempotency(tmp_path: Path):
     assert ledger2["total_earned_usd"] == ledger1["total_earned_usd"]
 
 
-def test_daemon_cli_status(monkeypatch, capsys):
+def test_daemon_cli_status(monkeypatch, capsys, tmp_path: Path):
     from fba_audit.daemon import main
-    monkeypatch.setattr("sys.argv", ["fba-daemon", "--status"])
+    payouts = tmp_path / "payouts"
+    monkeypatch.setattr("sys.argv", ["fba-daemon", "--status", "--payouts-dir", str(payouts)])
     ret = main()
     assert ret == 0
     out = capsys.readouterr().out
     assert "AUTONOMOUS AMAZON FBA REIMBURSEMENT AUDIT ENGINE" in out
 
 
-def test_daemon_cli_once_simulate(monkeypatch, capsys):
+def test_daemon_cli_once_simulate(monkeypatch, capsys, tmp_path: Path):
     from fba_audit.daemon import main
-    monkeypatch.setattr("sys.argv", ["fba-daemon", "--once", "--simulate-if-empty"])
+    inbound = tmp_path / "inbound"
+    output = tmp_path / "output"
+    payouts = tmp_path / "payouts"
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "fba-daemon",
+            "--once",
+            "--simulate-if-empty",
+            "--inbound-dir", str(inbound),
+            "--output-dir", str(output),
+            "--payouts-dir", str(payouts),
+        ],
+    )
     ret = main()
     assert ret == 0
     out = capsys.readouterr().out
-    assert "Cycle Result:" in out
+    assert "Cycle Result: COMPLETED" in out
+    assert "[PAYOUT] Payout Alert Dispatched:" in out
 

@@ -10,10 +10,18 @@ from decimal import Decimal
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
+import re
 from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, Field
 
 from .leads import BrandLead, TargetCategory
+
+
+def _extract_first_name(name: Optional[str]) -> str:
+    if not name:
+        return "there"
+    parts = name.strip().split()
+    return parts[0] if parts else "there"
 
 
 DEFAULT_SENDER_NAME = "Viraj Tiwari"
@@ -87,7 +95,7 @@ class OutreachGenerator:
 
     def _build_step_1(self, lead: BrandLead) -> EmailMessage:
         brand = lead.brand_name
-        recipient_name = lead.decision_maker.name.split()[0] if lead.decision_maker.name else "there"
+        recipient_name = _extract_first_name(lead.decision_maker.name)
         est_discrepancy = f"${lead.estimated_annual_discrepancy_usd:,.2f}"
         est_volume = f"${lead.estimated_monthly_volume_usd:,.2f}"
 
@@ -187,7 +195,7 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Aria
 
     def _build_step_2(self, lead: BrandLead) -> EmailMessage:
         brand = lead.brand_name
-        recipient_name = lead.decision_maker.name.split()[0] if lead.decision_maker.name else "there"
+        recipient_name = _extract_first_name(lead.decision_maker.name)
 
         subject = f"Re: Policy G200213130: 45-day unreturned customer refund audit for {brand}"
 
@@ -272,7 +280,7 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Aria
 
     def _build_step_3(self, lead: BrandLead) -> EmailMessage:
         brand = lead.brand_name
-        recipient_name = lead.decision_maker.name.split()[0] if lead.decision_maker.name else "there"
+        recipient_name = _extract_first_name(lead.decision_maker.name)
         est_discrepancy = f"${lead.estimated_annual_discrepancy_usd:,.2f}"
 
         subject = f"60-day policy expiration deadline for {brand} ({lead.business_entity_name})"
@@ -360,12 +368,14 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Aria
         """
         Exports all emails in a sequence as individual .eml and .json files.
         """
-        out_dir = Path(dir_path) / sequence.brand_name.lower().replace(" ", "_")
+        safe_brand = re.sub(r"[^\w\-]", "_", sequence.brand_name.lower().strip())
+        out_dir = Path(dir_path) / safe_brand
         out_dir.mkdir(parents=True, exist_ok=True)
         paths: List[Path] = []
 
         for email in sequence.emails:
-            file_base = f"step_{email.step}_{email.step_name.lower().replace(' ', '_')}"
+            safe_step_name = re.sub(r"[^\w\-]", "_", email.step_name.lower().strip())
+            file_base = f"step_{email.step}_{safe_step_name}"
             eml_file = out_dir / f"{file_base}.eml"
 
             msg = MIMEMultipart("alternative")

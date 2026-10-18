@@ -194,6 +194,40 @@ def test_portal_http_server_endpoints(tmp_path: Path, fixtures_dir: Path):
             assert len(subs) == 1
             assert subs[0]["contact_email"] == "test@httpbrand.com"
 
+        # 5b. GET /api/submissions/<auth_id> (success and 404)
+        auth_id = auth_resp["authorization_id"]
+        with urllib.request.urlopen(f"{base_url}/api/submissions/{auth_id}") as resp:
+            assert resp.status == 200
+            single_sub = json.loads(resp.read().decode("utf-8"))
+            assert single_sub["authorization_id"] == auth_id
+            assert single_sub["contact_email"] == "test@httpbrand.com"
+
+        with pytest.raises(urllib.error.HTTPError) as exc_404:
+            urllib.request.urlopen(f"{base_url}/api/submissions/AUTH-NONEXISTENT")
+        assert exc_404.value.code == 404
+
+        # 5c. POST /api/audit with invalid JSON -> 400
+        req_bad = urllib.request.Request(
+            f"{base_url}/api/audit",
+            data=b"INVALID_JSON_CONTENT{{{",
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with pytest.raises(urllib.error.HTTPError) as exc_bad:
+            urllib.request.urlopen(req_bad)
+        assert exc_bad.value.code == 400
+
+        # 5d. POST /api/authorize with invalid payload -> 400
+        req_bad_auth = urllib.request.Request(
+            f"{base_url}/api/authorize",
+            data=json.dumps({"invalid": "missing_required_fields"}).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with pytest.raises(urllib.error.HTTPError) as exc_bad_auth:
+            urllib.request.urlopen(req_bad_auth)
+        assert exc_bad_auth.value.code == 400
+
         # 6. GET /invalid_path -> 404
         with pytest.raises(urllib.error.HTTPError) as exc_info:
             urllib.request.urlopen(f"{base_url}/nonexistent")
@@ -202,3 +236,57 @@ def test_portal_http_server_endpoints(tmp_path: Path, fixtures_dir: Path):
     finally:
         server.shutdown()
         server.server_close()
+
+
+def test_portal_audit_all_four_reports(tmp_path: Path, fixtures_dir: Path):
+    portal = SellerIntakePortal(portal_dir=tmp_path / "portal")
+
+    ledger_txt = (fixtures_dir / "ledger_detail_sample.tsv").read_text(encoding="utf-8")
+    returns_txt = (fixtures_dir / "customer_returns_sample.tsv").read_text(encoding="utf-8")
+    reimb_txt = (fixtures_dir / "reimbursements_sample.tsv").read_text(encoding="utf-8")
+    fees_txt = (fixtures_dir / "estimated_fees_sample.tsv").read_text(encoding="utf-8")
+
+    summary = portal.audit_reports(
+        ledger_content=ledger_txt,
+        returns_content=returns_txt,
+        reimbursements_content=reimb_txt,
+        fees_content=fees_txt,
+        seller_id="ALL_REPORTS_SELLER",
+    )
+    assert summary.total_claims_count > 0
+    assert summary.seller_id == "ALL_REPORTS_SELLER"
+
+
+def test_portal_authorize_uncached_submission(tmp_path: Path):
+    portal = SellerIntakePortal(portal_dir=tmp_path / "portal")
+
+    auth_req = AuthorizationRequest(
+        submission_id="SUB-UNCACHED-99",
+        seller_id="UNCACHED_STORE",
+        brand_name="Uncached Brand",
+        contact_email="uncached@brand.com",
+        contact_name="Uncached User",
+        signature_name="Uncached User",
+        contingency_agreement_accepted=True,
+    )
+    record = portal.authorize_dispute_processing(auth_req)
+    assert record.submission_id == "SUB-UNCACHED-99"
+    assert record.status == "AUTHORIZED"
+    assert portal.get_authorization(record.authorization_id) is not None
+    assert portal.get_authorization("AUTH-DOES-NOT-EXIST") is None
+
+
+def test_portal_cli_main(monkeypatch, tmp_path: Path):
+    from fba_audit.acquisition.portal import main
+    p_dir = tmp_path / "cli_portal"
+    # Provide --port 0 so it binds to an OS free port and doesn't block
+    monkeypatch.setattr("sys.argv", ["fba-portal", "--port", "0", "--portal-dir", str(p_dir)])
+    # Raise KeyboardInterrupt when thread.join is called to test clean shutdown
+    import threading
+    real_join = threading.Thread.join
+    def mock_join(self, timeout=None):
+        raise KeyboardInterrupt
+    monkeypatch.setattr(threading.Thread, "join", mock_join)
+
+    ret = main()
+    assert ret == 0

@@ -264,9 +264,16 @@ def main() -> int:
     parser.add_argument("--simulate-if-empty", action="store_true", help="Fallback to test fixtures if inbound_reports is empty")
     parser.add_argument("--status", action="store_true", help="Display current business earnings and ledger stats")
     parser.add_argument("--seller", type=str, default="SELLER_PRIMARY", help="Seller account identifier")
+    parser.add_argument("--inbound-dir", type=str, default=None, help="Inbound reports directory")
+    parser.add_argument("--output-dir", type=str, default=None, help="Audit deliverables output directory")
+    parser.add_argument("--payouts-dir", type=str, default=None, help="Payout ledger and notifications directory")
 
     args = parser.parse_args()
-    daemon = AutonomousAuditDaemon()
+    daemon = AutonomousAuditDaemon(
+        inbound_dir=Path(args.inbound_dir) if args.inbound_dir else None,
+        output_dir=Path(args.output_dir) if args.output_dir else None,
+        payouts_dir=Path(args.payouts_dir) if args.payouts_dir else None,
+    )
 
     if args.status:
         daemon.print_status()
@@ -292,8 +299,6 @@ def main() -> int:
         print(f"Cycle Result: {res['status']}")
         if res.get("new_payout_cut", 0) > 0:
             print(f"[PAYOUT] Payout Alert Dispatched: ${res['new_payout_cut']:,.2f}")
-        daemon.print_status()
-        return 0
         daemon.print_status()
         return 0
 

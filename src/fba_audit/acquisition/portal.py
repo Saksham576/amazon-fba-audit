@@ -682,6 +682,19 @@ class PortalHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(data).encode("utf-8"))
+        elif self.path.startswith("/api/submissions/"):
+            auth_id = self.path[len("/api/submissions/"):]
+            auth = self.portal_instance.get_authorization(auth_id) if self.portal_instance else None
+            if auth:
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps(json.loads(auth.model_dump_json())).encode("utf-8"))
+            else:
+                self.send_response(404)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": f"Authorization '{auth_id}' not found"}).encode("utf-8"))
         else:
             self.send_response(404)
             self.end_headers()
@@ -752,3 +765,32 @@ def start_portal_server(
     t = threading.Thread(target=server.serve_forever, daemon=True)
     t.start()
     return server, t
+
+
+def main() -> int:
+    import argparse
+    import sys
+    parser = argparse.ArgumentParser(
+        prog="fba_portal",
+        description="Self-Serve Web Intake Portal for Amazon FBA Sellers",
+    )
+    parser.add_argument("--host", default="127.0.0.1", help="Host interface to bind (default: 127.0.0.1)")
+    parser.add_argument("--port", type=int, default=8080, help="Port to listen on (default: 8080)")
+    parser.add_argument("--portal-dir", type=str, default="payouts/portal", help="Portal data directory")
+    args = parser.parse_args()
+
+    portal = SellerIntakePortal(portal_dir=args.portal_dir)
+    print(f"[PORTAL] Starting Amazon FBA Intake Portal on http://{args.host}:{args.port}")
+    server, thread = start_portal_server(portal=portal, host=args.host, port=args.port)
+    try:
+        thread.join()
+    except KeyboardInterrupt:
+        print("\nStopping portal server...")
+        server.shutdown()
+        server.server_close()
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

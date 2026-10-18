@@ -46,6 +46,7 @@ dev = [
 [project.scripts]
 fba-audit = "fba_audit.cli:main"
 fba-daemon = "fba_audit.daemon:main"
+fba-portal = "fba_audit.acquisition.portal:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

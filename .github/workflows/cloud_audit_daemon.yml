@@ -48,9 +48,17 @@ jobs:
           FBA_SMTP_PORT: ${{ secrets.FBA_SMTP_PORT || '587' }}
           FBA_SMTP_USER: ${{ secrets.FBA_SMTP_USER }}
           FBA_SMTP_PASS: ${{ secrets.FBA_SMTP_PASS }}
+          INPUT_SELLER_ID: ${{ inputs.seller_id }}
+          INPUT_SIMULATE: ${{ inputs.simulate_if_empty }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           mkdir -p inbound_reports audit_output payouts/notifications
-          fba-daemon --once --simulate-if-empty --seller "SELLER_CLOUD_SCHEDULED"
+          SELLER_ARG="${INPUT_SELLER_ID:-SELLER_CLOUD_SCHEDULED}"
+          SIM_FLAG=""
+          if [ "$EVENT_NAME" = "schedule" ] || [ "$INPUT_SIMULATE" = "true" ] || [ -z "$EVENT_NAME" ]; then
+            SIM_FLAG="--simulate-if-empty"
+          fi
+          fba-daemon --once $SIM_FLAG --seller "$SELLER_ARG"
 
       - name: Upload Audit Deliverables (CSV, HTML Dossier, JSON)
         uses: actions/upload-artifact@v4
