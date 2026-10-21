@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "last_run": "2026-10-20T13:57:07.807184+00:00",
+  "last_run": "2026-10-21T14:13:15.633050+00:00",
   "total_leads": 9,
   "active_pipeline_count": 9,
-  "total_dispatched_touches": 12,
+  "total_dispatched_touches": 17,
   "leads": {
     "LEAD-HK-001": {
       "brand_id": "LEAD-HK-001",
@@ -14,8 +14,8 @@
       "estimated_monthly_volume_usd": 185000.0,
       "estimated_annual_discrepancy_usd": 48840.0,
       "potential_15_fee_usd": 7326.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -25,9 +25,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-HK-001_step_1_20261018_094448.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-21T14:13:15.633050+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for AuraKitchen Labs",
+          "recipient": "marcus@aurakitchenlabs.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-HK-001_step_2_20261021_141315.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+      "next_touch_due": "2026-10-24T14:13:15.633050+00:00"
     },
     "LEAD-HK-002": {
       "brand_id": "LEAD-HK-002",
@@ -38,8 +50,8 @@
       "estimated_monthly_volume_usd": 120000.0,
       "estimated_annual_discrepancy_usd": 30240.0,
       "potential_15_fee_usd": 4536.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -49,9 +61,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-HK-002_step_1_20261018_094448.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-21T14:13:15.633050+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for PureLoom Living",
+          "recipient": "sarah.lin@pureloomliving.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-HK-002_step_2_20261021_141315.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+      "next_touch_due": "2026-10-24T14:13:15.633050+00:00"
     },
     "LEAD-EL-001": {
       "brand_id": "LEAD-EL-001",
@@ -62,8 +86,8 @@
       "estimated_monthly_volume_usd": 340000.0,
       "estimated_annual_discrepancy_usd": 102000.0,
       "potential_15_fee_usd": 15300.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -73,9 +97,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-EL-001_step_1_20261018_094448.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-21T14:13:15.633050+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for SoundPulse Audio",
+          "recipient": "david.sterling@soundpulse.tech",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-EL-001_step_2_20261021_141315.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:44:48.272861+00:00"
+      "next_touch_due": "2026-10-24T14:13:15.633050+00:00"
     },
     "LEAD-EL-002": {
       "brand_id": "LEAD-EL-002",
@@ -86,8 +122,8 @@
       "estimated_monthly_volume_usd": 210000.0,
       "estimated_annual_discrepancy_usd": 60480.0,
       "potential_15_fee_usd": 9072.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -97,9 +133,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-EL-002_step_1_20261018_094511.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-21T14:13:15.633050+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for VoltCharge Pro",
+          "recipient": "elena@voltchargepro.io",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-EL-002_step_2_20261021_141315.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:45:11.797568+00:00"
+      "next_touch_due": "2026-10-24T14:13:15.633050+00:00"
     },
     "LEAD-AP-001": {
       "brand_id": "LEAD-AP-001",
@@ -110,8 +158,8 @@
       "estimated_monthly_volume_usd": 260000.0,
       "estimated_annual_discrepancy_usd": 96720.0,
       "potential_15_fee_usd": 14508.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -121,9 +169,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-AP-001_step_1_20261018_094511.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-21T14:13:15.633050+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for NordicActive Wear",
+          "recipient": "henrik@nordicactivewear.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-AP-001_step_2_20261021_141315.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:45:11.797568+00:00"
+      "next_touch_due": "2026-10-24T14:13:15.633050+00:00"
     },
     "LEAD-AP-002": {
       "brand_id": "LEAD-AP-002",
