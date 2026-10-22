@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "last_run": "2026-10-21T14:13:15.633050+00:00",
+  "last_run": "2026-10-22T14:12:14.116653+00:00",
   "total_leads": 9,
   "active_pipeline_count": 9,
-  "total_dispatched_touches": 17,
+  "total_dispatched_touches": 21,
   "leads": {
     "LEAD-HK-001": {
       "brand_id": "LEAD-HK-001",
@@ -194,8 +194,8 @@
       "estimated_monthly_volume_usd": 195000.0,
       "estimated_annual_discrepancy_usd": 67860.0,
       "potential_15_fee_usd": 10179.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -205,9 +205,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-AP-002_step_1_20261018_094537.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-22T14:12:14.116653+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for ZenAthletica",
+          "recipient": "jtaylor@zenathletica.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-AP-002_step_2_20261022_141214.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:45:37.716316+00:00"
+      "next_touch_due": "2026-10-25T14:12:14.116653+00:00"
     },
     "LEAD-TY-001": {
       "brand_id": "LEAD-TY-001",
@@ -218,8 +230,8 @@
       "estimated_monthly_volume_usd": 160000.0,
       "estimated_annual_discrepancy_usd": 38400.0,
       "potential_15_fee_usd": 5760.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -229,9 +241,21 @@
           "eml_file": "payouts\\crm\\outbox\\outreach_LEAD-TY-001_step_1_20261018_094537.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-22T14:12:14.116653+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for TinySparks Playworks",
+          "recipient": "arthur@tinysparksplay.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-TY-001_step_2_20261022_141214.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:45:37.716316+00:00"
+      "next_touch_due": "2026-10-25T14:12:14.116653+00:00"
     },
     "LEAD-PET-001": {
       "brand_id": "LEAD-PET-001",
@@ -242,8 +266,8 @@
       "estimated_monthly_volume_usd": 290000.0,
       "estimated_annual_discrepancy_usd": 73080.0,
       "potential_15_fee_usd": 10962.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -253,9 +277,21 @@
           "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-001_step_1_20261018_094612.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-22T14:12:14.116653+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for BarkHaven Goods",
+          "recipient": "rachel@barkhavengoods.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-001_step_2_20261022_141214.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:46:12.631474+00:00"
+      "next_touch_due": "2026-10-25T14:12:14.116653+00:00"
     },
     "LEAD-PET-002": {
       "brand_id": "LEAD-PET-002",
@@ -266,8 +302,8 @@
       "estimated_monthly_volume_usd": 145000.0,
       "estimated_annual_discrepancy_usd": 40020.0,
       "potential_15_fee_usd": 6003.0,
-      "current_step": 1,
-      "status": "STEP_1_CONTACTED",
+      "current_step": 2,
+      "status": "STEP_2_CONTACTED",
       "history": [
         {
           "step": 1,
@@ -277,9 +313,21 @@
           "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-002_step_1_20261018_094612.eml",
           "live_smtp_sent": false,
           "smtp_error": null
+        },
+        {
+          "step": 2,
+          "dispatched_at": "2026-10-22T14:12:14.116653+00:00",
+          "subject": "Re: Policy G200213130: 45-day unreturned customer refund audit for Pawsome Vitality",
+          "recipient": "bradley@pawsomevitality.com",
+          "eml_file": "payouts/crm/outbox/outreach_LEAD-PET-002_step_2_20261022_141214.eml",
+          "live_smtp_sent": false,
+          "smtp_error": null,
+          "smtp_diagnostic": null,
+          "host_used": null,
+          "port_used": null
         }
       ],
-      "next_touch_due": "2026-10-21T09:46:12.631474+00:00"
+      "next_touch_due": "2026-10-25T14:12:14.116653+00:00"
     }
   }
 }
