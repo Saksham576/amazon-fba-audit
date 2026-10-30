@@ -253,6 +253,19 @@
       "new_eligible_amount": 0.0,
       "payout_earned_usd": 0.0,
       "notification": null
+    },
+    {
+      "run_id": "run_20261030_152510",
+      "timestamp": "2026-10-30T15:25:10.154527",
+      "seller_id": "SELLER_CLOUD_SCHEDULED_SIMULATION",
+      "total_claims": 1,
+      "eligible_claims": 1,
+      "total_claim_amount": 19.99,
+      "eligible_amount": 19.99,
+      "new_claims_count": 0,
+      "new_eligible_amount": 0.0,
+      "payout_earned_usd": 0.0,
+      "notification": null
     }
   ]
 }
